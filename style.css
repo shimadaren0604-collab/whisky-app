@@ -1,0 +1,911 @@
+/* =====================================================
+   style.css — Whisky Vault
+   ダークグレー × ゴールドアクセントの高級管理ツールUI
+   ===================================================== */
+
+/* ===== CSS変数（カラーパレット） ===== */
+:root {
+  /* ダークグレー系ベースカラー */
+  --bg-deepest:   #0d0d0d;
+  --bg-dark:      #141414;
+  --bg-card:      #1a1a1a;
+  --bg-table-row: #1e1e1e;
+  --bg-row-hover: #252525;
+  --bg-input:     #222222;
+  --border:       #2e2e2e;
+  --border-light: #3a3a3a;
+
+  /* ゴールドアクセント */
+  --gold:         #c9a84c;
+  --gold-light:   #e5c97a;
+  --gold-dark:    #9a7a30;
+  --gold-glow:    rgba(201, 168, 76, 0.15);
+
+  /* テキスト */
+  --text-primary:   #f0ebe0;
+  --text-secondary: #9a9080;
+  --text-muted:     #5a5450;
+  --text-gold:      #c9a84c;
+
+  /* ステータスカラー */
+  --danger:       #c0392b;
+  --danger-hover: #e74c3c;
+
+  /* フォント */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'Josefin Sans', 'Helvetica Neue', sans-serif;
+
+  /* スペーシング */
+  --radius:   6px;
+  --radius-lg: 12px;
+  --shadow:   0 4px 24px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 20px rgba(201, 168, 76, 0.2);
+}
+
+/* ===== リセット & ベース ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-deepest);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  min-height: 100vh;
+
+  /* 微細なノイズテクスチャ風背景 */
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(201,168,76,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(201,168,76,0.03) 0%, transparent 50%);
+}
+
+/* ===== ヘッダー ===== */
+.site-header {
+  background: linear-gradient(180deg, #161616 0%, #111111 100%);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ロゴ */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 8px rgba(201,168,76,0.5));
+}
+
+.logo-text h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  /* ゴールドグラデーション文字 */
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-sub {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+/* ヘッダー統計 */
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 30px;
+  background: var(--border-light);
+}
+
+/* ===== メインコンテンツ ===== */
+.main-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+
+/* ===== コントロールバー ===== */
+.control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  padding: 5px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.filter-btn:hover {
+  border-color: var(--gold-dark);
+  color: var(--gold);
+}
+
+.filter-btn.active {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* 追加ボタン */
+.btn-add {
+  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+  border: none;
+  color: #0d0d0d;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(201,168,76,0.25);
+}
+
+.btn-add:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+}
+
+.btn-add:active {
+  transform: translateY(0);
+}
+
+/* ===== テーブル ===== */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+}
+
+.whisky-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.whisky-table thead tr {
+  background: linear-gradient(180deg, #1f1f1f 0%, #1a1a1a 100%);
+  border-bottom: 1px solid var(--gold-dark);
+}
+
+.whisky-table th {
+  padding: 13px 16px;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.whisky-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+  animation: rowFadeIn 0.3s ease;
+}
+
+/* テーブル行のフェードインアニメーション */
+@keyframes rowFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.whisky-table tbody tr:hover {
+  background: var(--bg-row-hover);
+}
+
+.whisky-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.whisky-table td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  color: var(--text-primary);
+}
+
+/* 列幅設定 */
+.col-img        { width: 64px; }
+.col-name       { min-width: 140px; font-weight: 400; }
+.col-distillery { min-width: 130px; }
+.col-country    { min-width: 80px; }
+.col-type       { min-width: 100px; }
+.col-date       { min-width: 100px; }
+.col-price      { min-width: 90px; text-align: right; }
+.col-note       { min-width: 200px; max-width: 300px; }
+.col-actions    { width: 100px; text-align: center; white-space: nowrap; }
+
+/* 銘柄名 */
+td.col-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+/* 種類バッジ */
+.type-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+/* 種類ごとの配色 */
+.badge-single-malt  { color: #c9a84c; border-color: #c9a84c44; background: #c9a84c11; }
+.badge-blended      { color: #7ec8e3; border-color: #7ec8e344; background: #7ec8e311; }
+.badge-bourbon      { color: #e8a87c; border-color: #e8a87c44; background: #e8a87c11; }
+.badge-rye          { color: #98c379; border-color: #98c37944; background: #98c37911; }
+.badge-irish        { color: #56b6c2; border-color: #56b6c244; background: #56b6c211; }
+.badge-other        { color: #abb2bf; border-color: #abb2bf44; background: #abb2bf11; }
+
+/* 価格表示 */
+td.col-price {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+/* テイスティングメモ */
+td.col-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* テーブルの画像 */
+.table-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+}
+
+.table-img-placeholder {
+  width: 48px;
+  height: 48px;
+  background: var(--bg-input);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+/* 操作ボタン */
+.btn-edit,
+.btn-delete {
+  background: transparent;
+  border: 1px solid;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-ui);
+}
+
+.btn-edit {
+  color: var(--gold);
+  border-color: var(--gold-dark);
+  margin-right: 4px;
+}
+
+.btn-edit:hover {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+}
+
+.btn-delete {
+  color: var(--danger);
+  border-color: #5a1e1a;
+}
+
+.btn-delete:hover {
+  background: rgba(192,57,43,0.15);
+  border-color: var(--danger);
+  color: var(--danger-hover);
+}
+
+/* 空状態 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state p:first-child {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.empty-sub {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* ===== モーダルオーバーレイ ===== */
+.modal-overlay {
+  display: none; /* 初期非表示 */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: overlayFadeIn 0.2s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* display:flex で表示する（JSで切り替え） */
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow), var(--shadow-gold);
+  animation: modalSlideUp 0.25s ease;
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-box--sm {
+  max-width: 400px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+/* ===== フォーム ===== */
+.whisky-form {
+  padding: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 横全幅のフィールド */
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.required {
+  color: var(--gold);
+}
+
+/* 入力フィールド共通スタイル */
+.whisky-form input[type="text"],
+.whisky-form input[type="date"],
+.whisky-form input[type="number"],
+.whisky-form select,
+.whisky-form textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 300;
+  padding: 10px 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  width: 100%;
+}
+
+/* フォーカス時 */
+.whisky-form input:focus,
+.whisky-form select:focus,
+.whisky-form textarea:focus {
+  border-color: var(--gold-dark);
+  box-shadow: 0 0 0 2px rgba(201,168,76,0.1);
+}
+
+/* セレクトボックスの矢印 */
+.whisky-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a84c'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.whisky-form select option {
+  background: var(--bg-card);
+}
+
+.whisky-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* プレースホルダー */
+.whisky-form input::placeholder,
+.whisky-form textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* 画像アップロードエリア */
+.upload-area {
+  position: relative;
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius);
+  background: var(--bg-input);
+  transition: border-color 0.2s;
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 90px;
+}
+
+.upload-area:hover {
+  border-color: var(--gold-dark);
+}
+
+/* ファイル入力を透明にして全体をクリック可能に */
+.upload-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  min-height: 90px;
+}
+
+.upload-icon {
+  font-size: 1.5rem;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  display: block;
+  padding: 8px;
+  background: var(--bg-input);
+}
+
+/* フォームアクション */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-cancel:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.btn-save {
+  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+  border: none;
+  color: #0d0d0d;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 28px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-save:hover {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  box-shadow: 0 2px 12px rgba(201,168,76,0.3);
+}
+
+/* 削除確認モーダル */
+.delete-msg {
+  padding: 20px 24px 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.btn-delete-confirm {
+  background: var(--danger);
+  border: none;
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-delete-confirm:hover {
+  background: var(--danger-hover);
+}
+
+/* ===== スクロールバー（カスタム） ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* ===== レスポンシブ対応 ===== */
+@media (max-width: 768px) {
+
+  .header-inner {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .logo-text h1 {
+    font-size: 1.3rem;
+  }
+
+  .stat-num {
+    font-size: 1.1rem;
+  }
+
+  .main-content {
+    padding: 16px 12px 40px;
+  }
+
+  .control-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-add {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* スマホでは表を横スクロール */
+  .table-wrapper {
+    border-radius: var(--radius);
+  }
+
+  .whisky-table th,
+  .whisky-table td {
+    padding: 10px 10px;
+    font-size: 0.75rem;
+  }
+
+  td.col-name {
+    font-size: 0.9rem;
+  }
+
+  /* フォームを1カラム */
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* =====================================================
+   スマホ用カード表示（画面幅600px以下）
+   ===================================================== */
+@media (max-width: 600px) {
+
+  /* テーブルのヘッダー行を非表示にする */
+  .whisky-table thead {
+    display: none;
+  }
+
+  /* 各行をカード風に表示 */
+  .whisky-table tbody tr {
+    display: block;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    margin-bottom: 14px;
+    padding: 14px;
+    background: var(--bg-card);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+
+  /* 各セルをラベル付きで縦並びに */
+  .whisky-table tbody td {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+
+  .whisky-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  /* data-label属性をラベルとして表示 */
+  .whisky-table tbody td::before {
+    content: attr(data-label);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 64px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* 画像セルは中央揃えに */
+  .whisky-table tbody td.col-img {
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  /* 銘柄名は大きく */
+  .whisky-table tbody td.col-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* 操作ボタンを横並びに */
+  .whisky-table tbody td.col-actions {
+    justify-content: flex-end;
+    padding-top: 10px;
+  }
+
+  .whisky-table tbody td.col-actions::before {
+    display: none; /* 操作のラベルは非表示 */
+  }
+
+  /* 追加ボタンをFAB風に固定 */
+  .btn-add {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1;
+    z-index: 200;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* FABの「+ Add Whisky」テキストを隠して＋だけ表示 */
+  .btn-add span {
+    display: block;
+    font-size: 1.8rem;
+    line-height: 1;
+    margin-top: -2px;
+  }
+
+  /* コントロールバーの調整 */
+  .control-bar {
+    padding-bottom: 10px;
+  }
+
+  /* テーブルラッパーの枠を消す（カードで見た目を作るため） */
+  .table-wrapper {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+}
